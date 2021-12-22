@@ -55,9 +55,6 @@
                                             <button type="submit" class="btn btn-o-white">Buat Kategori</button>
                                         </div>
                                     </form>
-                                    <form method="get" action="editKategori.php" role="form">
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-o-white">Edit Kategori</button>
                                         </div>
                                     </form>
                                 </div>
