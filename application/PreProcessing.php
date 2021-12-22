@@ -137,9 +137,15 @@ if($result->num_rows == 0){
                         $sql1 = mysqli_query($koneksi, "SELECT * FROM kategori");
                         while ($data = mysqli_fetch_array($sql1)) {
                             $sql3 = mysqli_query($koneksi, "SELECT kategori FROM preprocessing WHERE entry_id='$id'");
-                            while ($data1 = mysqli_fetch_array($sql3)) {
+                            if($sql3->num_rows > 0){
+                                while ($data1 = mysqli_fetch_array($sql3)) {
+                                    ?>
+                                        <option value="<?php echo $data['nm_kategori']; ?>" <?php if($data['nm_kategori'] == $data1['kategori']){ echo 'selected';} ?>><?php echo $data['nm_kategori']; ?></option>
+                                    <?php
+                                }
+                            } else {
                                 ?>
-                                    <option value="<?php echo $data['nm_kategori']; ?>" <?php if($data['nm_kategori'] == $data1['kategori']){ echo 'selected';} ?>><?php echo $data['nm_kategori']; ?></option>
+                                    <option value="<?php echo $data['nm_kategori']; ?>"><?php echo $data['nm_kategori']; ?></option>
                                 <?php
                             }
                         }
@@ -159,7 +165,7 @@ if($result->num_rows == 0){
 
         if ($result1->num_rows == 0) {
             //save to databases
-            $q = "INSERT INTO preprocessing VALUE ('$id','$cf','$simbol','$tokenisasi','$slangword,','$stopword','$stemming','$stemming',)";
+            $q = "INSERT INTO preprocessing (`entry_id`,`p_cf`,`p_simbol`,`p_tokenisasi`,`p_sword`,`p_stopword`,`p_stemming`,`data_bersih`) VALUE ('$id','$cf','$simbol','$tokenisasi','$slangword,','$stopword','$stemming','$stemming')";
 
             $result1 = mysqli_query($koneksi, $q);
         }else{
