@@ -447,6 +447,9 @@ h1, h2, h3, h4, h5, h6{
 .form-control-white:-ms-input-placeholder { /* Internet Explorer 10+ */
     color:    white;
 }
+.placeholder {
+	color: transparent;
+  }
 
 
 /*////////////////////////////////////////////////////////////////////////

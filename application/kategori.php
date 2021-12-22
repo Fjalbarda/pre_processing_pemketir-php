@@ -27,38 +27,21 @@
                 </section>
                 <section class="center">
                     <div class="slogan">
-                        Form Input Link File XML
-                    </div>
-                    <div class="secondary-slogan">
-                        <div>
-                            Input Link
-                        </div>
+                        Form Pembuatan Kategori Baru
                     </div>
                     <div class="content-block">
                         <div class="container text-center">
                             <section>
                                 <div class="col-md-6 col-md-offset-3">
-                                    <form action="LoadFile.php" method="get" role="form">
+                                    <form action="" method="get" role="form">
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-white" name="link">
+                                            <input type="text" class="form-control form-control-white" name="id_kategori" placeholder="Masukkan ID Kategori" style="text-align: center">
                                         </div>
-                                        <input type="submit" class="btn btn-o-white" value="Simpan Data">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-white" name="nm_kategori" placeholder="Masukkan Nama Kategori" style="text-align: center">
+                                        </div>
+                                        <input type="submit" name="submit" class="btn btn-o-white" value="Simpan Data">
                                         <br><br>
-                                    </form>
-                                    <form method="get" action="PreProcessing.php" role="form">
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-o-white">Pre Processing</button>
-                                        </div>
-                                    </form>
-                                    <form method="get" action="kategori.php" role="form">
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-o-white">Buat Kategori</button>
-                                        </div>
-                                    </form>
-                                    <form method="get" action="editKategori.php" role="form">
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-o-white">Edit Kategori</button>
-                                        </div>
                                     </form>
                                 </div>
                             </section>
@@ -69,8 +52,20 @@
         </div>
     </div>
 
-
-
-    
 </body>
 </html>
+<?php
+include 'Koneksi.php';
+if (isset($_GET['submit'])) {
+    $idKategori = $_GET['id_kategori'];
+    $nmKategori = $_GET['nm_kategori'];
+    $query = mysqli_query($koneksi, "INSERT INTO kategori VALUES ('$idKategori', '$nmKategori')");
+    if ($query) {
+        echo "<script>alert('Berhasil Di Input!')</script>";
+    } else {
+        echo "<script>alert('Gagal Di Input!')</script>";
+    }
+}
+
+
+?>

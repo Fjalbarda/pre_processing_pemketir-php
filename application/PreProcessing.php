@@ -65,6 +65,7 @@ if($result->num_rows == 0){
                 <th>Stimming</th>
                 <th>Tokenisasi</th>
                 <th>Data Bersih</th>
+                <th>Kategori</th>
         </tr>
 <?php
     while($d = mysqli_fetch_array($result)) {
@@ -128,6 +129,25 @@ if($result->num_rows == 0){
                 <td><?php echo $stemming;?></td>
                 <td><?php echo $tokenisasi;?></td>
                 <td><?php echo $stemming;?></td>
+                <td>
+                    <form action="" method="get">
+                        <input type="hidden" name="entry_id" value="<?php echo $id; ?>">
+                    <select name="kategori" id="kategori" class="form-group">
+                    <?php
+                        $sql1 = mysqli_query($koneksi, "SELECT * FROM kategori");
+                        while ($data = mysqli_fetch_array($sql1)) {
+                            $sql3 = mysqli_query($koneksi, "SELECT kategori FROM preprocessing WHERE entry_id='$id'");
+                            while ($data1 = mysqli_fetch_array($sql3)) {
+                                ?>
+                                    <option value="<?php echo $data['nm_kategori']; ?>" <?php if($data['nm_kategori'] == $data1['kategori']){ echo 'selected';} ?>><?php echo $data['nm_kategori']; ?></option>
+                                <?php
+                            }
+                        }
+                    ?>
+                    </select>
+                    <input type="submit" name="ubah" value="Submit">
+                    </form>
+                </td>
             </tr>
 
         </tabel>
@@ -139,7 +159,7 @@ if($result->num_rows == 0){
 
         if ($result1->num_rows == 0) {
             //save to databases
-            $q = "INSERT INTO preprocessing VALUE ('$id','$cf','$simbol','$tokenisasi','$slangword,','$stopword','$stemming','$stemming')";
+            $q = "INSERT INTO preprocessing VALUE ('$id','$cf','$simbol','$tokenisasi','$slangword,','$stopword','$stemming','$stemming',)";
 
             $result1 = mysqli_query($koneksi, $q);
         }else{
@@ -164,3 +184,15 @@ if($result->num_rows == 0){
     </div>
 
 </html>
+<?php
+    if(isset($_GET['ubah'])){
+        $kategori = $_GET['kategori'];
+        $id = $_GET['entry_id'];
+        $sql2 = mysqli_query($koneksi, "UPDATE preprocessing SET kategori='$kategori' WHERE entry_id = '$id'");
+        if($sql2){
+            echo "<script>alert('Kategori Berhasil Di Update!'); window.location.href = 'PreProcessing.php';</script>";
+        } else {
+            echo "<script>alert('Kategori Gagal Di Update!')</script>";
+        }
+    }
+?>
